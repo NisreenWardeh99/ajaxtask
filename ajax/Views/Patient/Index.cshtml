@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+   
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger;
+            $.ajax({
+
+                type: 'get',
+                url: '/ajax/Patient/FillCountry',
+                success: function (data) {
+                    debugger;
+                    data.forEach(function (object) {
+                        $("#ddlcountry").append("<option value=" + object.id + ">" + object.name + "</option");
+                    })
+                }
+            })
+            $("#btn1").click(function () {
+                var p = {
+                    //"id": $("txtid").val();
+                    "name": $("#txtname").val(),
+                    "bd": $("#txtbd").val(),
+                    "phone": $("#txtphone").val(),
+                    "country_id": $("#ddlcountry").val(),
+
+                };
+                $.ajax({
+                    type: 'post',
+                    url: '/ajax/Patient/SaveData',
+                    data: p,
+                    success: function (data) {
+                        alert(data);
+
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                })
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        @*<div class="row">
+            <div class="col-lg-2">
+                <span>    ID</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" id="txtid" />
+            </div>
+        </div>*@
+        <div class="row">
+            <div class="col-lg-2">
+                <span>    Name</span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" id="txtname" />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-2">
+                <span>  Birth date </span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" id="txtbd" />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-2">
+                <span>  Phone </span>
+            </div>
+            <div class="col-lg-4">
+                <input type="text" id="txtphone" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <span>  Country </span>
+            </div>
+            <div class="col-lg-4">
+                <select id="ddlcountry"></select>
+            </div>
+        </div>
+
+        <div class="row">
+            <input type="button" value=" Save" id="btn1" />
+        </div>
+    </div>
+</body>
+</html>
